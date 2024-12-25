@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const adminController = require('../controllers/dashboardController');
-const { orderPage } = require('../controllers/customerController.js');
 const axios = require('../utils/axios.js');
 const paymentService = require('../services/paymentService.js');
 const validateMiddleware = require('../middleware/validate');
+const customerController = require('../controllers/customerController.js');
 
 const initWebRouters = (app) => {
   // Trang chủ
@@ -65,7 +65,7 @@ const initWebRouters = (app) => {
   router.get(
     '/tour',
     validateMiddleware.checkLogged,
-    // validateMiddleware.authorizationAdmin,
+    validateMiddleware.authorizationAdmin,
     (req, res) => {
       return res.render('admin/tour.ejs');
     }
@@ -117,7 +117,11 @@ const initWebRouters = (app) => {
     }
   );
   // Đặt tour
-  router.get('/order-tour', validateMiddleware.checkLogged, orderPage);
+  router.get(
+    '/order-tour',
+    validateMiddleware.checkLogged,
+    customerController.orderPage
+  );
   // trang chi tiết đặt tour
   router.get('/detail/:id', async (req, res) => {
     let response = await axios.get(
@@ -200,9 +204,11 @@ const initWebRouters = (app) => {
 
   // Hủy thanh toán đặt tour
   router.get('/cancel-order', validateMiddleware.checkLogged, (req, res) => {
-    // res.redirect('/');
-    res.render('customer/orderTourSuccess');
+    res.redirect('/');
   });
+
+  // Chỉnh sửa thông tin tài khoản khách hàng
+  router.get('/customer/edit/:id', customerController.editInfoPage);
 
   return app.use('/', router);
 };
