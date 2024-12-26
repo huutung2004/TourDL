@@ -13,6 +13,7 @@ let getDashBoard = async (req, res) => {
   const topTour = await axios.get(
     `http://localhost:8080/api/v1/TopTour?type=MONTH`
   );
+  
   const totalAccountCustomer = await axios.get(
     `http://localhost:8080/api/User/TotalUsers`
   );
