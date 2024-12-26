@@ -5,11 +5,11 @@ const tourId = urlPath.split('/').pop(); // Lấy ID từ URL
 // Hàm lấy tỉnh thành
 async function fetchProvinces() {
     try {
-        const response = await fetch('https://vn-public-apis.fpo.vn/provinces/getAll?limit=-1'); // URL API trả về dữ liệu tỉnh thành
+        const response = await fetch(`http://localhost:3124/api/v1/provinces`); // URL API trả về dữ liệu tỉnh thành
         const data = await response.json();
 
         // Kiểm tra dữ liệu trả về có hợp lệ không
-        if (data.exitcode === 1 && Array.isArray(data.data.data)) {
+        if (data.errCode === 200 && Array.isArray(data.data.data)) {
             const startPointSelect = document.getElementById('tourStartPoint');
             const endPointSelect = document.getElementById('tourEndPoint');
 

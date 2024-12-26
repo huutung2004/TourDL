@@ -63,7 +63,7 @@ document.querySelector('.crudFrom').addEventListener('submit', async (event) => 
             body: JSON.stringify(calendarData),
         });
         if (response.status=200) {
-            alert('Thêm tour thành công!');
+            alert('Thêm lịch trình thành công!');
             // Reset form
             document.querySelector('.crudFrom').reset();
         } else {

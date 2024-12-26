@@ -22,7 +22,6 @@ public class CalendarController {
 		List<Calendar> calendars = calendarService.getAllCalendar();
 		return calendars;
 	}
-
 	@PostMapping("/Calendars")
 	public ResponseEntity<?> createCalendar(@RequestBody Calendar calendar) {
         try {
@@ -51,7 +50,6 @@ public class CalendarController {
 			return new ResponseEntity<>(rx.getMessage(), HttpStatus.NOT_FOUND);
 		}
 	}
-
 	@GetMapping("/Calendars/near-future")
 	public ResponseEntity<?> getCalendarsWithinThreeDaysFromNow() {
 		try {
@@ -61,7 +59,6 @@ public class CalendarController {
 			return new ResponseEntity<>(re.getMessage(), HttpStatus.NOT_FOUND);
 		}
 	}
-
 	@GetMapping("/Calendars/current-and-next-month")
 	public ResponseEntity<?> getCalendarsInCurrentAndNextMonth() {
 		try {

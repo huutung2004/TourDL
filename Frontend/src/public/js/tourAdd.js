@@ -1,10 +1,10 @@
 function fetchProvinces() {
     // URL API trả về dữ liệu tỉnh thành
-    fetch('https://vn-public-apis.fpo.vn/provinces/getAll?limit=-1')  // Thay bằng URL API thực tế của bạn
+    fetch('http://localhost:3124/api/v1/provinces')  // Thay bằng URL API thực tế của bạn
         .then(response => response.json())
         .then(data => {
             // Kiểm tra dữ liệu trả về có hợp lệ không
-            if (data.exitcode === 1 && Array.isArray(data.data.data)) {
+            if (data.errCode === 200 && Array.isArray(data.data.data)) {
                 const startPointSelect = document.getElementById('tourStartPoint');
                 const endPointSelect = document.getElementById('tourEndPoint');
 
