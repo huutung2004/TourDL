@@ -205,7 +205,7 @@ let getInfoTourDetailByDate = (tourId, dateId) => {
 let createTourOrder = (data) => {
   return new Promise(async (resolve, reject) => {
     try {
-      let orderDate = new Date()
+      let orderDate = await new Date()
         .toLocaleString('en', {
           timeZone: 'Asia/Ho_Chi_Minh',
           hour12: false,
