@@ -28,7 +28,7 @@ public class UserTourOrderController {
 
 	    // Ánh xạ từ List<UserTourOrder> sang List<UserTourOrderDTO>
 	    List<UserTourOrderDTO> pageUTOsDTO = pageUTOs.getContent().stream()
-	            .map(uto -> modelMapper.map(uto, UserTourOrderDTO.class))  // Cung cấp kiểu đích rõ ràng
+	            .map(uto -> modelMapper.map(uto, UserTourOrderDTO.class))
 	            .collect(Collectors.toList());
 
 	    // Tạo Page<UserTourOrderDTO> từ List<UserTourOrderDTO>
@@ -36,7 +36,7 @@ public class UserTourOrderController {
 	    return dtoPage;
 	}
 	@GetMapping("/utos-by-order")
-	public UserTourOrderDTO fifindUserTourOrderById(@RequestParam int userId, @RequestParam int orderId){
+	public UserTourOrderDTO findUserTourOrderById(@RequestParam int userId, @RequestParam int orderId){
 		UserTourOrder uto = userTourOrderService.findUserTourOrderById(userId,orderId);
 		UserTourOrderDTO userTourOrderDTO = modelMapper.map(uto, UserTourOrderDTO.class);
 		return userTourOrderDTO;
