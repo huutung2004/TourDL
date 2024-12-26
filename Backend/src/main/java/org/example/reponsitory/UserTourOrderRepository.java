@@ -11,6 +11,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UserTourOrderRepository extends JpaRepository<UserTourOrder, UserTourOrderKey> {
 
-    Page<UserTourOrder> findUserTourOrderByStatus(Pageable pageable, int status);
+    Page<UserTourOrder> findUserTourOrderByStatusOrderByIdDesc(Pageable pageable, int status);
     UserTourOrder findUserTourOrderById(UserTourOrderKey key);
 }

@@ -24,6 +24,7 @@ async function getRevenue(type) {
   try {
     const response = await axios.get(`${URL_API_SERVER_V1}/Revenue/${type}`);
     const revenue = response.data; // Lấy dữ liệu từ response
+    
     if (response.status === 200) {
       const formattedRevenue = revenue.toLocaleString('en-US', {
         maximumFractionDigits: 3,
@@ -60,7 +61,6 @@ async function getTopTour(type) {
     const response = await axios.get(
       `http://localhost:8080/api/v1/TopTour?type=${type}`
     );
-
     if (response.status === 200) {
       const html =
         response.data.length > 0

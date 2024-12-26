@@ -69,6 +69,6 @@ public class VoucherService implements IVoucherService {
 
 	@Override
 	public Page<Voucher> pageVouchers(Pageable pageable) {
-		return voucherReponsitory.findAll(pageable);
+		return voucherReponsitory.findAllByOrderByStartDateDesc(pageable);
 	}
 }

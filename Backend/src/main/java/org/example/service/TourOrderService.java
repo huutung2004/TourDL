@@ -32,13 +32,10 @@ public class TourOrderService implements ITourOrderService {
 
 	public List<TourOrderDTO> getAllTourOrder() {
 		List<TourOrderDTO> tourOrderDTOs = new ArrayList<>();
-
-		// Lấy tất cả các TourOrder từ repository và chuyển đổi sang TourOrderDTO
 		for (TourOrder tourOrder : tourOrderReponsitory.findAll()) {
 			TourOrderDTO tourOrderDTO = new TourOrderDTO(tourOrder);
 			tourOrderDTOs.add(tourOrderDTO);
 		}
-		// Trả về danh sách TourOrderDTO đã cập nhật
 		return tourOrderDTOs;
 	}
 

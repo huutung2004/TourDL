@@ -21,4 +21,7 @@ public interface VoucherReponsitory extends JpaRepository<Voucher, Integer> {
 	@Modifying
 	@Query("UPDATE Voucher v SET v.status = :status WHERE v.id = :id")
 	int updateStatus(@Param("id") int id, @Param("status") int status);
+
+	Page<Voucher> findAllByOrderByStartDateDesc(Pageable pageable);
+
 }

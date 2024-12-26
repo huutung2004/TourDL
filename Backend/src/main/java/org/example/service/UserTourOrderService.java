@@ -16,7 +16,7 @@ public class UserTourOrderService implements IUserTourOrderService {
 	@Override
 	public Page<UserTourOrder> pageUTOs(Pageable pageable,int status) {
 		
-		return userTourOrderRepository.findUserTourOrderByStatus(pageable,status);
+		return userTourOrderRepository.findUserTourOrderByStatusOrderByIdDesc(pageable,status);
 	}
 
 	@Override

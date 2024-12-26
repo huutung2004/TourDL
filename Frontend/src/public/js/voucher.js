@@ -89,9 +89,8 @@ const getPaginationItems = (currentPage, totalPages) => {
   // Tạo HTML
   let pageHtml = `
         <div class="page-item">
-            <button class="prev-page ${
-              currentPage === 1 ? 'disabled' : ''
-            }">Trước</button>
+            <button class="prev-page ${currentPage === 1 ? 'disabled' : ''
+    }">Trước</button>
     `;
 
   paginationItems.forEach((item) => {
@@ -99,18 +98,16 @@ const getPaginationItems = (currentPage, totalPages) => {
       pageHtml += `<span class="dots">${item}</span>`;
     } else {
       pageHtml += ` 
-                <button class="page-numbers ${
-                  item === currentPage ? 'page-number-active' : ''
-                }" data-page="${item}">
+                <button class="page-numbers ${item === currentPage ? 'page-number-active' : ''
+        }" data-page="${item}">
                     ${item}
                 </button>`;
     }
   });
 
   pageHtml += `
-            <button class="next-page ${
-              currentPage === totalPages ? 'disabled' : ''
-            }" >Tiếp</button>
+            <button class="next-page ${currentPage === totalPages ? 'disabled' : ''
+    }" >Tiếp</button>
         </div>
     `;
 
@@ -183,28 +180,26 @@ function renderVouchers(data) {
     .map((voucher) => {
       return `
             <div class=${checkVoucher(
-              voucher.expiryDate,
-              voucher.status
-            )} key=${voucher.id}>
+        voucher.expiryDate,
+        voucher.status
+      )} key=${voucher.id}>
                 <div class="voucher__admin--table--data">
-                    <input type="radio" name='select__voucher' id="voucher-id" value="${
-                      voucher.id
-                    }" />
+                    <input type="radio" name='select__voucher' id="voucher-id" value="${voucher.id
+        }" />
                 </div>
                 <div class="voucher__admin--table--data">${voucher.id}</div>
-                <div class="voucher__admin--table--data">${
-                  voucher.voucherName
-                }</div>
+                <div class="voucher__admin--table--data">${voucher.voucherName
+        }</div>
                 <div class="voucher__admin--table--data">${changeTypeVoucher(
-                  voucher.type
-                )}</div>
+          voucher.type
+        )}</div>
                 <div class="voucher__admin--table--data">${voucher.value}</div>
                 <div class="voucher__admin--table--data">${formatDate(
-                  voucher.startDate
-                )}</div>
+          voucher.startDate
+        )}</div>
                 <div class="voucher__admin--table--data">${formatDate(
-                  voucher.expiryDate
-                )}</div>
+          voucher.expiryDate
+        )}</div>
             </div>
         `;
     })
@@ -251,8 +246,10 @@ btnLock.addEventListener('click', () => {
     'input[name="select__voucher"]:checked'
   );
   if (selectedRadio) {
-    const selectedVoucherId = selectedRadio.value;
-    updateStatusVoucher(selectedVoucherId, -1); // Cập nhật trạng thái voucher thành "khóa"
+    if (window.confirm("Bạn có muốn khóa voucher này không")) {
+      const selectedVoucherId = selectedRadio.value;
+      updateStatusVoucher(selectedVoucherId, -1);
+    }
   } else {
     alert('Bạn chưa chọn voucher để khóa');
   }
