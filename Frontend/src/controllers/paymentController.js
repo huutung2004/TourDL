@@ -15,6 +15,16 @@ let handleCreateOrder = async (req, res) => {
   }
 };
 
+let handleCompleteOrder = async (req, res) => {
+  try {
+    await paymentService.capturePayment(req.query.token);
+    return res.render('customer/orderTourSuccess');
+  } catch (error) {
+    return res.redirect('/');
+  }
+};
+
 module.exports = {
   handleCreateOrder: handleCreateOrder,
+  handleCompleteOrder: handleCompleteOrder,
 };

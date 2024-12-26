@@ -36,11 +36,27 @@ let orderPage = async (req, res) => {
   }
 };
 
-let editInfoPage = (req, res) => {
+let editInfoPage = async (req, res) => {
   try {
     let userId = req.params.id;
-    console.log(userId);
-    return res.render('customer/editInfoCustomer.ejs');
+    let cookies = req.headers.cookie;
+    try {
+      let dataUser = await axios.get(
+        `http://localhost:3124/api/v1/users/${userId}`,
+        {
+          headers: {
+            Cookie: cookies, // Gắn cookie vào trong headers
+          },
+          withCredentials: true, // Gắn thông tin xác thực
+        }
+      );
+      return res.render('customer/editInfoCustomer.ejs', {
+        user: dataUser.data,
+      });
+    } catch (error) {
+      console.log(error);
+      return res.redirect('/');
+    }
   } catch (error) {
     console.log(error);
     return res.redirect('/');

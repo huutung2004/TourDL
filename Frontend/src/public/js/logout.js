@@ -1,4 +1,4 @@
-const buttonLogout = document.querySelector('.icon__logout');
+const buttonLogout = document.querySelector('.header__infor-item.logout');
 
 const handleLogout = async () => {
   sessionStorage.clear();

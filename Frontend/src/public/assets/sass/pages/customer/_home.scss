@@ -21,8 +21,8 @@
         }
         .tour-filter__box {
           display: grid;
-          grid-template-columns: auto auto;
-          gap: 10px 10px;
+          grid-template-columns: 48% 48%;
+          gap: 10% 4%;
           margin-bottom: $mb;
           .tour-filter__option {
             background-color: #fff;

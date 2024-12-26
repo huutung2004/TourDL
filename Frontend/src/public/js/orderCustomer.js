@@ -2,7 +2,6 @@ let resAPIInfo = async () => {
   try {
     let userId = sessionStorage.getItem('userID');
     let res = await axios.get(`http://localhost:3124/api/v1/users/${userId}`);
-    //   Chưa validation
     return res.data.data;
   } catch (error) {
     alert('Lỗi call api');
