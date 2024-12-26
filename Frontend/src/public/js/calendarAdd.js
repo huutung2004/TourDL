@@ -63,12 +63,12 @@ document.querySelector('.crudFrom').addEventListener('submit', async (event) => 
             body: JSON.stringify(calendarData),
         });
         if (response.status=200) {
-            alert('Thêm tour thành công!');
+            alert('Thêm lịch trình thành công!');
             // Reset form
             document.querySelector('.crudFrom').reset();
         } else {
             const error = await response.json();
-            alert('Thêm tour thất bại: ' + (error.message || 'Lỗi không xác định'));
+            alert('Thêm lịch trình thất bại: ' + (error.message || 'Lỗi không xác định'));
             console.error('Lỗi:', error);
         }
     } catch (err) {
