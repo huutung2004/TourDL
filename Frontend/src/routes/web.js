@@ -2,9 +2,9 @@ const express = require('express');
 const router = express.Router();
 const adminController = require('../controllers/dashboardController');
 const axios = require('../utils/axios.js');
-const paymentService = require('../services/paymentService.js');
-const validateMiddleware = require('../middleware/validate');
+const authMiddleware = require('../middleware/authMiddleware');
 const customerController = require('../controllers/customerController.js');
+const paymentController = require('../controllers/paymentController.js');
 
 const initWebRouters = (app) => {
   // Trang chủ
@@ -14,31 +14,31 @@ const initWebRouters = (app) => {
   // Dashboard
   router.get(
     '/Dashboard',
-    validateMiddleware.checkLogged,
-    validateMiddleware.authorizationAdmin,
+    authMiddleware.checkLogged,
+    authMiddleware.authorizationAdmin,
     adminController.getDashBoard
   );
   // Quản lí voucher
   router.get(
     '/voucher',
-    validateMiddleware.checkLogged,
-    validateMiddleware.authorizationAdmin,
+    authMiddleware.checkLogged,
+    authMiddleware.authorizationAdmin,
     (req, res) => {
       return res.render('admin/voucher.ejs');
     }
   );
   router.get(
     '/voucher/add',
-    validateMiddleware.checkLogged,
-    validateMiddleware.authorizationAdmin,
+    authMiddleware.checkLogged,
+    authMiddleware.authorizationAdmin,
     (req, res) => {
       return res.render('admin/voucherAdd.ejs');
     }
   );
   router.get(
     '/voucher/modify/:id',
-    validateMiddleware.checkLogged,
-    validateMiddleware.authorizationAdmin,
+    authMiddleware.checkLogged,
+    authMiddleware.authorizationAdmin,
     (req, res) => {
       const voucherId = req.params.id;
       return res.render('admin/voucherModify.ejs', { voucherId });
@@ -47,16 +47,16 @@ const initWebRouters = (app) => {
   // Quản lí tour
   router.get(
     '/tour/add',
-    validateMiddleware.checkLogged,
-    validateMiddleware.authorizationAdmin,
+    authMiddleware.checkLogged,
+    authMiddleware.authorizationAdmin,
     (req, res) => {
       return res.render('admin/tourAdd.ejs');
     }
   );
   router.get(
     '/tour/modify/:id',
-    validateMiddleware.checkLogged,
-    validateMiddleware.authorizationAdmin,
+    authMiddleware.checkLogged,
+    authMiddleware.authorizationAdmin,
     (req, res) => {
       const tourId = req.params.id;
       return res.render('admin/tourModify.ejs', { tourId });
@@ -64,8 +64,8 @@ const initWebRouters = (app) => {
   );
   router.get(
     '/tour',
-    validateMiddleware.checkLogged,
-    validateMiddleware.authorizationAdmin,
+    authMiddleware.checkLogged,
+    authMiddleware.authorizationAdmin,
     (req, res) => {
       return res.render('admin/tour.ejs');
     }
@@ -73,8 +73,8 @@ const initWebRouters = (app) => {
   // Quản lí lịch tour
   router.get(
     '/calendar/add/:id',
-    validateMiddleware.checkLogged,
-    validateMiddleware.authorizationAdmin,
+    authMiddleware.checkLogged,
+    authMiddleware.authorizationAdmin,
     (req, res) => {
       const tourId = req.params.id;
       return res.render('admin/calendarAdd.ejs', { tourId });
@@ -82,8 +82,8 @@ const initWebRouters = (app) => {
   );
   router.get(
     '/calendar/modify/:id',
-    validateMiddleware.checkLogged,
-    validateMiddleware.authorizationAdmin,
+    authMiddleware.checkLogged,
+    authMiddleware.authorizationAdmin,
     (req, res) => {
       const calendarId = req.params.id;
       return res.render('admin/calendarModify.ejs', { calendarId });
@@ -91,8 +91,8 @@ const initWebRouters = (app) => {
   );
   router.get(
     '/tour/calendar/:id',
-    validateMiddleware.checkLogged,
-    validateMiddleware.authorizationAdmin,
+    authMiddleware.checkLogged,
+    authMiddleware.authorizationAdmin,
     (req, res) => {
       const tourId = req.params.id;
       return res.render('admin/tourCalendar.ejs', { tourId });
@@ -100,8 +100,8 @@ const initWebRouters = (app) => {
   );
   router.get(
     '/tour/detail/:id',
-    validateMiddleware.checkLogged,
-    validateMiddleware.authorizationAdmin,
+    authMiddleware.checkLogged,
+    authMiddleware.authorizationAdmin,
     (req, res) => {
       const tourId = req.params.id;
       return res.render('admin/tourDetail.ejs', { tourId });
@@ -110,8 +110,8 @@ const initWebRouters = (app) => {
   // Quản lí tài khoản
   router.get(
     '/customer',
-    validateMiddleware.checkLogged,
-    validateMiddleware.authorizationAdmin,
+    authMiddleware.checkLogged,
+    authMiddleware.authorizationAdmin,
     (req, res) => {
       return res.render('admin/customer.ejs');
     }
@@ -119,14 +119,12 @@ const initWebRouters = (app) => {
   // Đặt tour
   router.get(
     '/order-tour',
-    validateMiddleware.checkLogged,
+    authMiddleware.checkLogged,
+    authMiddleware.authorizationCustomer,
     customerController.orderPage
   );
   // trang chi tiết đặt tour
   router.get('/detail/:id', async (req, res) => {
-    let response = await axios.get(
-      `http://localhost:3124/api/v1/tours/${req.params.id}`
-    );
     return res.render('customer/detail.ejs');
   });
 
@@ -171,16 +169,16 @@ const initWebRouters = (app) => {
   // Quản lí order
   router.get(
     '/admin-order',
-    validateMiddleware.checkLogged,
-    validateMiddleware.authorizationAdmin,
+    authMiddleware.checkLogged,
+    authMiddleware.authorizationAdmin,
     (req, res) => {
       return res.render('admin/order.ejs');
     }
   );
   router.get(
     '/admin-order/user/:userId/order/:orderID',
-    validateMiddleware.checkLogged,
-    validateMiddleware.authorizationAdmin,
+    authMiddleware.checkLogged,
+    authMiddleware.authorizationAdmin,
     (req, res) => {
       const userId = req.params.userId;
       const orderId = req.params.orderID;
@@ -191,24 +189,22 @@ const initWebRouters = (app) => {
   // Đặt tour thành công
   router.get(
     '/complete-order',
-    validateMiddleware.checkLogged,
-    async (req, res) => {
-      try {
-        await paymentService.capturePayment(req.query.token);
-        return res.render('customer/orderTourSuccess');
-      } catch (error) {
-        return res.redirect('/');
-      }
-    }
+    authMiddleware.checkLogged,
+    paymentController.handleCompleteOrder
   );
 
   // Hủy thanh toán đặt tour
-  router.get('/cancel-order', validateMiddleware.checkLogged, (req, res) => {
+  router.get('/cancel-order', authMiddleware.checkLogged, (req, res) => {
     res.redirect('/');
   });
 
   // Chỉnh sửa thông tin tài khoản khách hàng
-  router.get('/customer/edit/:id', customerController.editInfoPage);
+  router.get(
+    '/customer/edit/:id',
+    authMiddleware.checkLogged,
+    authMiddleware.authorizationCustomer,
+    customerController.editInfoPage
+  );
 
   return app.use('/', router);
 };

@@ -37,12 +37,58 @@
     <div class="customerInfo">
       <div class="grid wide">
         <div class="row">
-          <div class="col l-12"></div>
+          <div class="col l-12">
+            <div class="customerInfo__container">
+              <h1 class="customerInfo__title">Thông tin liên lạc</h1>
+              <div class="customerInfo__content">
+                <div class="customerInfo__item">
+                  <label for="username">Họ và tên</label>
+                  <input
+                    type="text"
+                    id="username"
+                    placeholder="Nhập họ tên"
+                    value="<%= user.name %>"
+                  />
+                </div>
+                <div class="customerInfo__item">
+                  <label for="phonenumber">Điện thoại</label>
+                  <input
+                    type="text"
+                    id="phonenumber"
+                    placeholder="Nhập số điện thoại"
+                    value="<%= user.phone_number%>"
+                  />
+                </div>
+                <div class="customerInfo__item">
+                  <label for="email">Email</label>
+                  <input
+                    type="email"
+                    id="email"
+                    placeholder="Nhập email"
+                    value="<%= user.email%>"
+                  />
+                </div>
+                <div class="customerInfo__item">
+                  <label for="address">Địa chỉ</label>
+                  <input
+                    type="text"
+                    id="address"
+                    placeholder="Nhập địa chỉ"
+                    value="<%= user.address%>"
+                  />
+                </div>
+              </div>
+              <div class="button-save-info">
+                Lưu<span><i class="fa-solid fa-floppy-disk"></i></span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
     <!-- Javascript -->
     <%- include('../partials/baseScriptFE')%>
     <script src="/js/components/headerLogin.js"></script>
+    <script src="/js/customer/editInfoCustomer.js"></script>
   </body>
 </html>

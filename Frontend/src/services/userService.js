@@ -1,3 +1,4 @@
+const { raw } = require('body-parser');
 const db = require('../models');
 const moment = require('moment');
 const { Op, where } = require('sequelize');
@@ -84,7 +85,50 @@ let getInfoById = (inputId) => {
   });
 };
 
+let updateInfoById = (userId, data) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let user = await db.User.findOne({
+        where: {
+          id: userId,
+        },
+        raw: false,
+      });
+      if (!user) {
+        return resolve({
+          status: 1,
+          message: 'Người dùng không tồn tại',
+        });
+      }
+      let checkEmail = await db.User.findOne({
+        where: {
+          email: data.email,
+        },
+        attributes: ['id'],
+      });
+      if (checkEmail && checkEmail.id !== user.id) {
+        return resolve({
+          status: 2,
+          message: 'Email đã tồn tại',
+        });
+      }
+      user.name = data.name;
+      user.email = data.email;
+      user.phone_number = data.phoneNumber;
+      user.address = data.address;
+      await user.save();
+      return resolve({
+        status: 0,
+        message: 'Lưu thành công',
+      });
+    } catch (error) {
+      return reject(error);
+    }
+  });
+};
+
 module.exports = {
   getTopUser: getTopUser,
   getInfoById: getInfoById,
+  updateInfoById: updateInfoById,
 };

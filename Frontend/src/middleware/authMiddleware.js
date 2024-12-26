@@ -101,10 +101,23 @@ let authorizationAdmin = (req, res, next) => {
   }
 };
 
+let authorizationCustomer = (req, res, next) => {
+  try {
+    let role = res.locals.role;
+    if (role !== 0) {
+      return res.redirect('/login');
+    }
+    next();
+  } catch (error) {
+    return res.redirect('/login');
+  }
+};
+
 module.exports = {
   checkLogged: checkLogged,
   validateAPI: validateAPI,
   authorizationAPIAdmin: authorizationAPIAdmin,
   authorizationAPI: authorizationAPI,
   authorizationAdmin: authorizationAdmin,
+  authorizationCustomer: authorizationCustomer,
 };

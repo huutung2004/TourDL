@@ -58,7 +58,41 @@ let handleGetInfo = async (req, res) => {
     });
   }
 };
+
+let handleUpdateInfo = async (req, res) => {
+  try {
+    let userId = res.locals.userId;
+    let data = res.locals.data;
+    let check = await userService.updateInfoById(userId, data);
+    if (check.status === 1) {
+      return res.status(404).json({
+        errCode: 2,
+        message: check.message,
+      });
+    }
+    if (check.status === 2) {
+      return res.status(400).json({
+        errCode: 1,
+        message: check.message,
+      });
+    }
+    if (check.status === 0) {
+      return res.status(200).json({
+        errCode: 0,
+        message: check.message,
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      errCode: 3,
+      message: 'Error from server',
+    });
+  }
+};
+
 module.exports = {
   handleGetTopUser: handleGetTopUser,
   handleGetInfo: handleGetInfo,
+  handleUpdateInfo: handleUpdateInfo,
 };

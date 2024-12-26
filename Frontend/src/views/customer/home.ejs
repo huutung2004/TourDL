@@ -178,42 +178,14 @@
       </div>
     </div>
     <!-- End body content -->
+    <!-- Footer -->
+    <%- include('../partials/footerCustomer')%>
+    <!-- End Footer -->
     <!-- Javascript -->
     <%- include('../partials/baseScriptFE')%>
-    <script>
-      let username = sessionStorage.getItem('username');
-      const header = document.querySelector('.header__content');
-      if (username) {
-        let headerButtonBox = document.querySelector('.header__button');
-        headerButtonBox.classList.add('hide');
-        header.innerHTML += `<div class="header__infor-customer">
-        <span class="icon">
-          <i class="fa-solid fa-user"></i>
-        </span>
-        <span class="header__infor-customer-name"> ${username} </span>
-        <span class="icon__logout" title="Đăng xuất"> 
-          <i class="fa-solid fa-right-from-bracket"></i>
-        </span>
-      </div>`;
-      }
-    </script>
+    <script src="/js/components/headerLogin.js"></script>
     <script src="/js/home.js"></script>
-    <script>
-      let buttonTop = document.querySelector('.button-top');
-
-      buttonTop.addEventListener('click', () => {
-        document.body.scrollTop = 0;
-        document.documentElement.scrollTop = 0;
-      });
-
-      window.addEventListener('scroll', () => {
-        if (window.scrollY > 100) {
-          buttonTop.classList.add('active');
-        } else {
-          buttonTop.classList.remove('active');
-        }
-      });
-    </script>
+    <script src="/js/components/buttonToTop.js"></script>
     <script src="/js/logout.js"></script>
   </body>
 </html>
